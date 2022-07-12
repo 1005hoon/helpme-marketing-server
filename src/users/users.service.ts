@@ -17,7 +17,20 @@ export class UsersService {
 
     if (!user) {
       throw new HttpException(
-        `이메일에 해당하는 사용자가 존재하지 않습니다 ${email}`,
+        `${email} 이메일에 해당하는 사용자가 존재하지 않습니다`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return user;
+  }
+
+  async getById(userId: string) {
+    const user = await this.userModel.findById(userId);
+
+    if (!user) {
+      throw new HttpException(
+        `${userId} 아이디에 해당하는 사용자가 존재하지 않습니다`,
         HttpStatus.NOT_FOUND,
       );
     }
